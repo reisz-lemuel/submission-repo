@@ -1,0 +1,14 @@
+{
+  "name": "my-fullstack-app",
+  "version": "1.0.0",
+  "workspaces": [
+    "part1",
+    "part2",
+    "part3"
+  ],
+  "scripts": {
+    "start": "npm run start:backend & npm run start:frontend",
+    "start:frontend": "cd part3/frontend && npm run dev",
+    "start:backend": "cd part3/backend && npm start"
+  }
+}
