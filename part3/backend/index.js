@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors')
 const app = express();
 
-app.use(express.json());  // For parsing JSON requests
+app.use(express.static('dist'))
 app.use(cors())
 
 let persons = [
