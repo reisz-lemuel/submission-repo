@@ -101,7 +101,7 @@ const App = () => {
         .catch((error) => {
           setNotification({
             type: 'error',
-            text: 'Error adding person',
+            text: error.response.data.error,
           })
           setTimeout(() => {
             setNotification(null)
@@ -132,6 +132,7 @@ const App = () => {
           setTimeout(() => {
             setNotification(null)
           }, 5000)
+          
         })
     }
   }
@@ -144,7 +145,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Phonebooks</h2>
       <Notification notification={notification} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <PersonsForm 
