@@ -12,5 +12,8 @@
     "start:backend": "cd part3/backend && node index.js admin",
     "build:ui": "rmdir /s /q part3\\frontend\\dist && cd part3\\frontend && npm run build && xcopy /e /i dist ..\\backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
   }
 }
