@@ -10,7 +10,7 @@
     "start": "npm run start:backend & npm run start:frontend",
     "start:frontend": "cd part3/frontend && npm run dev",
     "start:backend": "cd part3/backend && node index.js admin",
-    "build:ui": "set NODE_ENV=development && rmdir /s /q part3\\frontend\\dist && cd part3\\frontend && npm run build && xcopy /e /i dist ..\\backend",
+    "build:ui": "rmdir /s /q part3\\frontend\\dist && cd part3\\frontend && npm run build && xcopy /e /i dist ..\\backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "dependencies": {
