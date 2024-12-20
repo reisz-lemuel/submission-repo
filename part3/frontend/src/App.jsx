@@ -101,7 +101,7 @@ const App = () => {
         .catch((error) => {
           setNotification({
             type: 'error',
-            text: 'Error adding person',
+            text: error.response.data.error,
           })
           setTimeout(() => {
             setNotification(null)
@@ -132,6 +132,7 @@ const App = () => {
           setTimeout(() => {
             setNotification(null)
           }, 5000)
+          
         })
     }
   }
