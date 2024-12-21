@@ -99,32 +99,11 @@ const App = () => {
           }, 5000)
         })
         .catch((error) => {
-          // Check if the error is related to validation (name too short)
-          if (error.response && error.response.data.error) {
-            const errorMessage = error.response.data.error
-
-            if (errorMessage.includes('name')) {
-              setNotification({
-                type: 'error',
-                text: 'Name must be at least 3 characters long',
-              })
-            } else {
-              setNotification({
-                type: 'error',
-                text: errorMessage, // For other types of errors
-              })
-            }
-          } else {
-            setNotification({
-              type: 'error',
-              text: 'Error adding person',
-            })
-          }
-
-          setTimeout(() => {
-            setNotification(null)
-          }, 5000)
-        })
+          setNotification({
+            type: 'error',
+            text: `${error.response.data.error}`
+          })
+      })
     }
   }
 

@@ -52,23 +52,19 @@ app.get('/api/persons/:id', (request, response, next) => {
 });
 
 // POST a new person
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body;
-
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: 'Please provide both name and number',
-    });
-  }
 
   const person = new Person({
     name: body.name,
     number: body.number,
   });
 
-  person.save().then((savedPerson) => {
+  person.save()
+  .then((savedPerson) => {
     response.json(savedPerson);
-  });
+  })
+  .catch(error => next(error))
 });
 
 // PUT to update a person's information (specifically their phone number)
@@ -77,7 +73,10 @@ app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body;
 
   // Update the person with the new phone number
-  Person.findByIdAndUpdate(id, { name, number }, { new: true })
+  Person.findByIdAndUpdate(
+      id, 
+    { name, number }, 
+    { new: true, runValidators: true, content: 'query' })
     .then((updatedPerson) => {
       if (!updatedPerson) {
         return response.status(404).json({ error: 'Person not found' });
