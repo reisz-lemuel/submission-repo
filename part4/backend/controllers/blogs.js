@@ -29,21 +29,34 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
 
-  response.status(201).json(savedBlog)
+ const populatedBlog = await savedBlog.populate('user', { username: 1, name: 1 });
+
+  response.status(201).json(populatedBlog);
 });
 
 blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
+  const { id } = request.params;
   const user = request.user;
-  const blog = await Blog.findById(request.params.id);
-  if (!blog) {
-    return response.status(404).json({ error: 'Blog not found' });
-  }
-  if(blog.user.toString() === user._id.toString()) {
-    await Blog.findByIdAndDelete(request.params.id)
+
+  try {
+    const blog = await Blog.findById(id);
+
+    if (!blog) {
+      return response.status(404).json({ error: 'Blog not found' });
+    }
+
+    if (blog.user.toString() !== user._id.toString()) {
+      return response.status(401).json({ error: 'Unauthorized to delete this blog' });
+    }
+
+    await Blog.findByIdAndDelete(id);
     response.status(204).end();
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: 'An error occurred while deleting the blog' });
   }
-  
 });
+
 
 
 blogsRouter.put('/:id', async (request, response) => {
