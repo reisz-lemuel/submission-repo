@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 if (process.argv.length< 3) {
   console.log('give password as argument')
@@ -6,7 +6,7 @@ if (process.argv.length< 3) {
 }
 const password = process.argv[2]
 
-const url = `mongodb+srv://admin:${password}@cluster0.ilzrk.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=Cluster0`;
+const url = `mongodb+srv://admin:${password}@cluster0.ilzrk.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery', false)
 
@@ -24,8 +24,7 @@ if(process.argv.length > 3) {
     name: process.argv[3],
     number: process.argv[4]
   })
-  
-  person.save().then(result => {
+  person.save().then(() => {
     console.log(`added ${person.name} ${person.number} to phonebook`)
     mongoose.connection.close()
   })
@@ -37,6 +36,5 @@ if(process.argv.length > 3) {
     })
     mongoose.connection.close()
   })
-
 }
 
